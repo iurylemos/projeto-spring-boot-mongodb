@@ -48,7 +48,7 @@ public class PostServico {
 	//Criei esse metodo na interface PostRepositorio.
 	
 	public List<Post> findByTitulo(String texto) {
-		return repo.findByTituloContainingIgnoreCase(texto);
+		return repo.procurarTitulo(texto);
 	}
 
 }
