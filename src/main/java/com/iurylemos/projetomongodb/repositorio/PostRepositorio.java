@@ -1,5 +1,6 @@
 package com.iurylemos.projetomongodb.repositorio;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -26,4 +27,18 @@ public interface PostRepositorio extends MongoRepository<Post, String> {
 	//Esse metodo vai me retornar uma lista de post.
 	//Buscando pelo Titutlo do Post
 	List<Post> findByTituloContainingIgnoreCase(String texto);
+	
+	//Especificando a consulta com o @Query
+	//Vou ter que buscar o texto
+	//OU no titulo, ou no corpo ou nos comentários.
+	//Depois do Ou, vou ter que pesquisar 
+	//a data Minima E a dataMaxima
+	//No primeiro field, esse $gte
+	//faz a comparação se o data é maior do que o parametro
+	//no caso coloquei ?1 para identificar que é a posição 2
+	//no caso a data minima
+	//No 2º eu testo se a data é menor igual a data maxima
+	//NO 3º vou testar o texto se ele se encontra
+	@Query("{ $and: [ { data: {$gte: ?1}}, {data: {$lte: ?2} } , { $or: [ {'titulo': { $regex: ?0, $options: 'i'} }, {'corpo': { $regex: ?0, $options: 'i'} }, {'comentarios.texto': { $regex: ?0, $options: 'i'} } ] } ] }")
+	List<Post> pesquisaCompleta(String texto, Date minData, Date maxData);
 }

@@ -1,5 +1,6 @@
 package com.iurylemos.projetomongodb.recursos;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,25 @@ public class PostRecursos {
 		//Decodificar o parametro
 		texto = URL.decodificarParametro(texto);
 		List<Post> list = servico.findByTitulo(texto);
+		//minha resposta vai ser meu objeto convertido para Post
+		return ResponseEntity.ok().body(list);
+	}
+	
+	//ENDPOINT
+	@RequestMapping(value= "/pesquisacompleta", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> pesquisaCompleta(
+			@RequestParam(value="text", defaultValue="") String texto,
+			@RequestParam(value="minData", defaultValue="") String minData,
+			@RequestParam(value="maxData", defaultValue="") String maxData)
+		{
+		
+		//Decodificar o parametro
+		texto = URL.decodificarParametro(texto);
+		//O padrão vai ser o 0L na data minima que é 1º de janeiro de 1970
+		Date min = URL.converterData(minData, new Date(0L));
+		//O padrão aqui vai ser a data atual.
+		Date max = URL.converterData(maxData, new Date());
+		List<Post> list = servico.pesquisaCompleta(texto, min, max);
 		//minha resposta vai ser meu objeto convertido para Post
 		return ResponseEntity.ok().body(list);
 	}

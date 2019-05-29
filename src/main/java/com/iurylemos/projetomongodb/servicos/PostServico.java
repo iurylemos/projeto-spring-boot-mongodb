@@ -1,5 +1,6 @@
 package com.iurylemos.projetomongodb.servicos;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,13 @@ public class PostServico {
 	
 	public List<Post> findByTitulo(String texto) {
 		return repo.procurarTitulo(texto);
+	}
+	
+	//Metodo de consulta
+	public List<Post> pesquisaCompleta(String texto, Date minData, Date maxData) {
+		//buscando a data até as 24 horas do próximo dia
+		maxData = new Date(maxData.getTime() + 24 * 60 * 60 * 1000);
+		return repo.pesquisaCompleta(texto, minData, maxData);
 	}
 
 }
