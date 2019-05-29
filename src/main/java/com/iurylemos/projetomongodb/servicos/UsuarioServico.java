@@ -55,6 +55,14 @@ public class UsuarioServico {
 		return repo.insert(obj);
 	}
 	
+	
+	public void delete(String id) {
+		findById(id);
+		repo.deleteById(id);
+	}
+	
+	
+	
 	//metodo fromDTO
 	/*
 	 * Vai pegar um DTO e instanciar um usuário.

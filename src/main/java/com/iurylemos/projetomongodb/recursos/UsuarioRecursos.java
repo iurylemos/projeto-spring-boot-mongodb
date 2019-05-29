@@ -114,4 +114,13 @@ public class UsuarioRecursos {
 		//Created retorna o 201 que é codigo HTTP quando cria um novo RECURSO
 		return ResponseEntity.created(uri).build();
 	}
+	
+	//Delete
+	@RequestMapping(value= "/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		//Como vai vim pela URL recebo pelo PathVariable
+		servico.delete(id);
+		//Não retorna nada, então é erro 204 que é o noContent
+		return ResponseEntity.noContent().build();
+	}
 }
