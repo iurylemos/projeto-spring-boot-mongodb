@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iurylemos.projetomongodb.dominio.Usuario;
+import com.iurylemos.projetomongodb.dto.UsuarioDTO;
 import com.iurylemos.projetomongodb.repositorio.UsuarioRepositorio;
 import com.iurylemos.projetomongodb.servicos.excessao.ObjetoNaoEncontradoException;
 
@@ -46,5 +47,23 @@ public class UsuarioServico {
 		Optional<Usuario> usuario = repo.findById(id);
 		
 		return usuario.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado"));
+	}
+	
+	//Inserção.
+	
+	public Usuario insert(Usuario obj) {
+		return repo.insert(obj);
+	}
+	
+	//metodo fromDTO
+	/*
+	 * Vai pegar um DTO e instanciar um usuário.
+	 * É a mesma coisa que fizemos na classe UsuarioDTO
+	 * com o contrutor dela, passando passando um Usuario
+	 * Só que aqui é ao contrário, é do DTO para o usuário.
+	 */
+	
+	public Usuario fromDTO(UsuarioDTO objDto) {
+		return new Usuario(objDto.getId(), objDto.getNome(), objDto.getEmail());
 	}
 }

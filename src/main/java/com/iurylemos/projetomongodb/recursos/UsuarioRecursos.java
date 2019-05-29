@@ -1,14 +1,17 @@
 package com.iurylemos.projetomongodb.recursos;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.iurylemos.projetomongodb.dominio.Usuario;
 import com.iurylemos.projetomongodb.dto.UsuarioDTO;
@@ -95,5 +98,20 @@ public class UsuarioRecursos {
 		
 		//minha resposta vai ser meu objeto convertido para UsuarioDTO
 		return ResponseEntity.ok().body(new UsuarioDTO(obj));
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@RequestBody UsuarioDTO objDto) {
+		Usuario obj = servico.fromDTO(objDto);
+		obj = servico.insert(obj);
+	/*
+	 * Vou retornar uma resposta vázia
+	 * porém nessa resposta eu vou colocar um cabeçalho
+	 * com a URL com o novo recurso criado.
+	 * E isso vai pegar o novo endereço do objeto que eu INSERIR
+	 */
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		//Created retorna o 201 que é codigo HTTP quando cria um novo RECURSO
+		return ResponseEntity.created(uri).build();
 	}
 }
