@@ -123,4 +123,16 @@ public class UsuarioRecursos {
 		//Não retorna nada, então é erro 204 que é o noContent
 		return ResponseEntity.noContent().build();
 	}
+	
+	//Update = Atualizar
+	//Ele vai ter tanto o ID na URL, quanto os dados vindo na requisição.
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody UsuarioDTO objDto, @PathVariable String id) {
+		Usuario obj = servico.fromDTO(objDto);
+		//Garantir que o meu objeto ele vai ter o ID da requisição.
+		obj.setId(id);
+		obj = servico.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
 }

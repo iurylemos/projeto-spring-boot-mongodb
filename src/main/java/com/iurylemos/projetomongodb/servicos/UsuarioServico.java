@@ -61,8 +61,25 @@ public class UsuarioServico {
 		repo.deleteById(id);
 	}
 	
+	public Usuario update(Usuario obj) {
+		//Dados que vier por argumento são os dados que o usuário
+		//Digitar na requisição.
+		/*
+		 * Para atualizar eu vou buscar o objeto que está no Bd
+		 * e alterar esse objeto com os dados enviados
+		 * e salvo esse objeto que eu busquei.
+		 */
+		Usuario novoObj = findById(obj.getId());
+		atualizarDados(novoObj, obj);
+		return repo.save(novoObj);
+	}
 	
-	
+	private void atualizarDados(Usuario novoObj, Usuario obj) {
+		novoObj.setNome(obj.getNome());
+		novoObj.setEmail(obj.getEmail());
+		
+	}
+
 	//metodo fromDTO
 	/*
 	 * Vai pegar um DTO e instanciar um usuário.
