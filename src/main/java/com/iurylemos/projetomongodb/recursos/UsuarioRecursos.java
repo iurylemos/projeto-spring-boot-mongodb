@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.iurylemos.projetomongodb.dominio.Post;
 import com.iurylemos.projetomongodb.dominio.Usuario;
 import com.iurylemos.projetomongodb.dto.UsuarioDTO;
 import com.iurylemos.projetomongodb.servicos.UsuarioServico;
@@ -133,6 +134,14 @@ public class UsuarioRecursos {
 		obj.setId(id);
 		obj = servico.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value= "/{id}/posts", method=RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		Usuario obj = servico.findById(id);
+		
+		//minha resposta vai ser meu objeto convertido para UsuarioDTO
+		return ResponseEntity.ok().body(obj.getPost());
 	}
 	
 }
