@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.iurylemos.projetomongodb.dominio.Post;
 import com.iurylemos.projetomongodb.dominio.Usuario;
 import com.iurylemos.projetomongodb.dto.AutorDTO;
+import com.iurylemos.projetomongodb.dto.ComentarioDTO;
 import com.iurylemos.projetomongodb.repositorio.PostRepositorio;
 import com.iurylemos.projetomongodb.repositorio.UsuarioRepositorio;
 
@@ -52,6 +53,15 @@ public class Instanciacao implements CommandLineRunner {
 		//Salvar na coleção.
 		//Dentro do salve coloco uma lista direto
 		//Arrays.aslist, já vai aceitar vamos argumentos e criar uma lista para mim
+		
+		//Comentários
+		ComentarioDTO c1 = new ComentarioDTO("Boa viagem mano!", sdf.parse("22/10/2018"), new AutorDTO(alex));
+		ComentarioDTO c2 = new ComentarioDTO("Aproveite!", sdf.parse("22/10/2018"), new AutorDTO(bob));
+		ComentarioDTO c3 = new ComentarioDTO("Tenha um otimo dia!", sdf.parse("22/10/2018"), new AutorDTO(alex));
+		
+		post1.getComentarios().addAll(Arrays.asList(c1, c2));
+		post2.getComentarios().addAll(Arrays.asList(c3));
+		
 		
 		postRepositorio.saveAll(Arrays.asList(post1, post2));
 		
