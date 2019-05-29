@@ -55,7 +55,10 @@ public class Instanciacao implements CommandLineRunner {
 		
 		postRepositorio.saveAll(Arrays.asList(post1, post2));
 		
-		
+		//Adicionando os posts ao usuário da maria.
+		maria.getPost().addAll(Arrays.asList(post1, post2));
+		usuarioRepositorio.save(maria);
+	
 	}
 
 }

@@ -1,8 +1,11 @@
 package com.iurylemos.projetomongodb.dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //Dizer que essa classe corresponde a uma coleção do MONGODB
@@ -15,6 +18,15 @@ public class Usuario implements Serializable {
 	private String id;
 	private String nome;
 	private String email;
+	
+	//List de post.
+	//lazy = true = não carregar automaticamente os posts
+	//quando pesquisar por um usuário do banco
+	//não quero que venha os post deles
+	//e sim os dados básicos para encontra-lo
+	//DBRef dizendo que é outra coleção do DBMongo
+	@DBRef(lazy = true)
+	private List<Post> post = new ArrayList<>();
 	
 	//Serializable = Objetos convertidos em bytes
 	//Para ser trafegado em redes e arquivos.
@@ -51,6 +63,14 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
 	}
 
 	@Override
