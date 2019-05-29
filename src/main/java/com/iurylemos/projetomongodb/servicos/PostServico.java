@@ -1,5 +1,6 @@
 package com.iurylemos.projetomongodb.servicos;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,11 @@ public class PostServico {
 		return usuario.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado"));
 	}
 	
+	//Metodo de busca
+	//Criei esse metodo na interface PostRepositorio.
+	
+	public List<Post> findByTitulo(String texto) {
+		return repo.findByTituloContainingIgnoreCase(texto);
+	}
 
 }
